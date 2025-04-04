@@ -1,0 +1,37 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:3000
+    depends_on:
+      - backend
+      - db
+    volumes:
+      - ./frontend/src:/app/src
+
+  backend:
+    build: ./backend
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_PORT=3306
+      - DB_NAME=database
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  db:
+    image: mysql:8.0.41
+    container_name: database
+    ports:
+      - 33065:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=database

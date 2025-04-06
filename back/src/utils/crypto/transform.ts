@@ -1,11 +1,6 @@
-import { hashSync } from 'bcrypt';
-import { ValueTransformer } from 'typeorm';
+import { hash } from 'bcrypt';
 
-export const passwordToHash: ValueTransformer = {
-  to: (password: string): string => {
-    return hashSync(password, 10);
-  },
-  from: (hash: string): string => {
-    return hash;
-  },
+export const passwordToHash = async (password: string): Promise<string> => {
+  const salt_rounds: number = 10;
+  return await hash(password, salt_rounds);
 };

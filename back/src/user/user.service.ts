@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Like, Repository } from 'typeorm';
 import { instanceToPlain } from 'class-transformer';
+import { passwordToHash } from 'src/utils/crypto/transform';
 
 @Injectable()
 export class UserService {
@@ -13,27 +14,16 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  /**
-   * @description a method to
-   * @param userList an array of Users
-   * @returns a list of users without the 'password' field
-   */
-  hidePasswordOfAListOfUsers(userList: User[]) {
-    const listWithoutPasswordField: Omit<User, 'password'>[] = userList.map(
-      (user: User) => {
-        const { password, ...result } = user;
-
-        return result;
-      },
-    );
-
-    return listWithoutPasswordField;
-  }
-
   async create(createUserDto: CreateUserDto) {
-    const userCreated: User = this.userRepository.create(createUserDto);
+    const hashedPassword = await passwordToHash(createUserDto.password);
+    const userToSave = this.userRepository.create({
+      ...createUserDto,
+      password: hashedPassword,
+    });
+
     try {
-      return await this.userRepository.save(userCreated);
+      const userCreated: User = await this.userRepository.save(userToSave);
+      return instanceToPlain(userCreated);
     } catch (err) {
       throw new InternalServerErrorException('Erro ao cadastrar usuário.');
     }
@@ -42,7 +32,6 @@ export class UserService {
   async findAll() {
     try {
       const userList = await this.userRepository.find();
-      console.log(userList)
       return instanceToPlain(userList);
     } catch (err) {
       throw new InternalServerErrorException(
@@ -83,14 +72,7 @@ export class UserService {
         where: { name: Like(`%${name}%`) },
       });
 
-      const usersWithoutPassword: Omit<User, 'password'>[] = usersList.map(
-        (user: User) => {
-          const { password, ...result } = user;
-          return result;
-        },
-      );
-
-      return usersWithoutPassword;
+      return usersList;
     } catch (err) {
       throw new InternalServerErrorException(
         'Erro ao buscar usuários por nome.',

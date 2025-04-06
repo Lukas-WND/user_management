@@ -22,7 +22,7 @@ export class User {
   @Column()
   employee_id: string;
 
-  @Column({ transformer: passwordToHash })
+  @Column()
   @Exclude()
   password: string;
 

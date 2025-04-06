@@ -1,4 +1,5 @@
 import { passwordToHash } from 'src/utils/crypto/transform';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -22,6 +23,7 @@ export class User {
   employee_id: string;
 
   @Column({ transformer: passwordToHash })
+  @Exclude()
   password: string;
 
   @CreateDateColumn()

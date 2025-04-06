@@ -11,8 +11,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string) {
-    const user = await this.userService.findOneByEmail(email);
+  async validateUser(register: string, pass: string) {
+    const user = await this.userService.findOneByEmailOrEmployeeID(register);
     const confirm = user ? await compare(pass, user.password) : false;
 
     if (user && confirm) {
@@ -24,6 +24,7 @@ export class AuthService {
   }
 
   async login(user) {
+    console.log(user)
     const payload = { email: user.email, sub: user.id };
 
     return {

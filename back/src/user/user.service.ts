@@ -52,16 +52,16 @@ export class UserService {
     }
   }
 
-  async findOneByEmail(email: string) {
+  async findOneByEmailOrEmployeeID(register: string) {
     try {
       const userFound: User | null = await this.userRepository.findOne({
-        where: { email },
+        where: [{ email: register }, { employee_id: register }],
       });
 
       return userFound;
     } catch (err) {
       throw new InternalServerErrorException(
-        'Erro ao buscar usuário por nome.',
+        'Erro ao buscar usuário por e-mail/matrícula',
       );
     }
   }

@@ -271,7 +271,7 @@ export default function DataTable<TData, TValue>({
       </div>
       <div className="rounded-md border overflow-hidden">
         <Table>
-          <TableHeader className="bg-custom-blue">
+          <TableHeader className="bg-custom-dark-blue">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="rounded">
                 {headerGroup.headers.map((header) => (

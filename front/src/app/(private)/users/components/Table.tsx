@@ -31,7 +31,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const user = row.original;
 
-      return <ActionsList />;
+      return <ActionsList user={user}/>;
     },
   },
 ];

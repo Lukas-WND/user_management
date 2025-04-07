@@ -13,10 +13,16 @@ import { InputPassword } from "@/components/ui/input-password";
 import { User } from "@/contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { createUser } from "../data/queries";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function CreateUserForm({ userData }: { userData?: User }) {
+  const router = useRouter();
+
   const UserSchema = z
     .object({
       name: z.string().min(1, { message: "O nome é obrigatório." }),
@@ -38,6 +44,19 @@ export function CreateUserForm({ userData }: { userData?: User }) {
 
   type UserDto = z.infer<typeof UserSchema>;
 
+  const createUserMutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success("Usuário criado com sucesso!");
+      router.push('/users')
+    },
+    onError: (data) => {
+      console.log(data);
+      toast.error("Erro ao cadastrar usuário!");
+    }
+  });
+
   const {
     register,
     handleSubmit,
@@ -51,7 +70,9 @@ export function CreateUserForm({ userData }: { userData?: User }) {
     },
   });
 
-  const handleCreate = () => {};
+  const handleCreate: SubmitHandler<UserDto> = (data) => {
+    createUserMutation.mutate(data);
+  };
 
   return (
     <Card className="w-full mt-10">

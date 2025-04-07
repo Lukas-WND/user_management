@@ -8,7 +8,7 @@ export function CreateUserButton() {
 
   return (
     <Button
-      className="bg-primary"
+      className="bg-custom-light-blue"
       onClick={() => {
         router.push("users/create");
       }}

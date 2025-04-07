@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
@@ -29,5 +29,12 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async getProfile(id: string) {
+    const user = await this.userService.findOneByID(id);
+
+    if (!user) throw new UnauthorizedException('Usuário não encontrado');
+    return user;
   }
 }

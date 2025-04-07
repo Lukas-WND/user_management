@@ -27,7 +27,7 @@ export default function RootLayout({
         <AuthProvider>
           <body className={`${manrope.variable} antialiased`}>
             {children}
-            <Toaster closeButton />
+            <Toaster richColors closeButton position="top-right"/>
           </body>
         </AuthProvider>
       </QueryClientProvider>

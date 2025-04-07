@@ -10,7 +10,7 @@ export function CreateUserButton() {
     <Button
       className="bg-primary"
       onClick={() => {
-        router.push("user/create");
+        router.push("users/create");
       }}
     >
       <PlusCircle className="size-5" />

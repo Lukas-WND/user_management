@@ -8,14 +8,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { User } from "@/contexts/AuthContext";
-import { PencilIcon } from "lucide-react";
+import { Eye } from "lucide-react";
 
 export function DetailsUser({ user }: { user: User }) {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button variant={"secondary"}>
-          <PencilIcon size={4} />
+          <Eye size={4} />
         </Button>
       </SheetTrigger>
       <SheetContent className="text-md p-4">
@@ -45,11 +45,11 @@ export function DetailsUser({ user }: { user: User }) {
           <SheetDescription>Detalhes</SheetDescription>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <p>Criado em</p>
+              <p>Data de Criação</p>
               <strong>
                 {new Intl.DateTimeFormat("pt-BR", {
                   dateStyle: "short",
-                  timeStyle: "short",
+                //   timeStyle: "short",
                 }).format(new Date(user.created_at))}
               </strong>
             </div>
@@ -60,9 +60,9 @@ export function DetailsUser({ user }: { user: User }) {
                 {user.updated_at
                   ? new Intl.DateTimeFormat("pt-BR", {
                       dateStyle: "short",
-                      timeStyle: "short",
+                    //   timeStyle: "short",
                     }).format(new Date(user.updated_at))
-                  : "Nunca"}
+                  : "Nenhuma"}
               </strong>
             </div>
           </div>

@@ -16,7 +16,7 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { createUser } from "../data/queries";
+import { createUser, updateUser } from "../data/queries";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -36,11 +36,31 @@ export function CreateUserForm({ userData }: { userData?: User }) {
         .regex(/^\d+$/, { message: "A matrícula deve conter apenas números" }),
       password: z.string().min(1, { message: "A senha é obrigatória" }),
       confirmPassword: z.string().min(1, { message: "Confirme sua senha" }),
+      newPassword: z.string().optional(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "As senhas devem ser iguais",
-      path: ["confirmPassword"],
-    });
+    .refine(
+      (data) =>
+        data.newPassword?.length
+          ? data.newPassword === data.confirmPassword
+          : data.password === data.confirmPassword,
+      {
+        message: "As senhas devem ser iguais",
+        path: ["confirmPassword"],
+      }
+    )
+    .refine(
+      (data) => {
+        // Se newPassword for fornecida, a senha atual (password) deve ser obrigatória
+        if (data.newPassword) {
+          return data.password.length > 0;
+        }
+        return true;
+      },
+      {
+        message: "A senha atual é obrigatória para definir uma nova senha.",
+        path: ["password"],
+      }
+    );
 
   type UserDto = z.infer<typeof UserSchema>;
 
@@ -49,12 +69,25 @@ export function CreateUserForm({ userData }: { userData?: User }) {
     onSuccess: (data) => {
       console.log(data);
       toast.success("Usuário criado com sucesso!");
-      router.push('/users')
+      router.push("/users");
     },
     onError: (data) => {
       console.log(data);
       toast.error("Erro ao cadastrar usuário!");
-    }
+    },
+  });
+
+  const updateUserMutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success("Usuário criado com sucesso!");
+      router.push("/users");
+    },
+    onError: (data) => {
+      console.log(data);
+      toast.error("Erro ao cadastrar usuário!");
+    },
   });
 
   const {
@@ -74,12 +107,18 @@ export function CreateUserForm({ userData }: { userData?: User }) {
     createUserMutation.mutate(data);
   };
 
+  const handleUpdate: SubmitHandler<UserDto> = (data) => {
+    if (!userData) return;
+    const { confirmPassword, ...result } = data;
+    updateUserMutation.mutate({ id: userData.id, user: result });
+  };
+
   return (
     <Card className="w-full mt-10">
       <CardHeader>
         <CardTitle>Dados do usuário</CardTitle>
       </CardHeader>
-      <form onSubmit={handleSubmit(handleCreate)}>
+      <form onSubmit={handleSubmit(userData ? handleUpdate : handleCreate)}>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col w-full">
@@ -142,6 +181,25 @@ export function CreateUserForm({ userData }: { userData?: User }) {
                 </p>
               )}
             </div>
+
+            <div
+              className={`flex flex-col w-full ${
+                userData ? "block" : "hidden"
+              }`}
+            >
+              <Label>Nova Senha</Label>
+              <InputPassword
+                placeholder="Insira a nova senha *"
+                className="mt-1"
+                {...register("newPassword")}
+              />
+              {errors.newPassword && (
+                <p className="mt-1 text-red-500 text-end">
+                  {errors.newPassword.message}
+                </p>
+              )}
+            </div>
+
             <div className="flex flex-col w-full">
               <Label>Confirmação de Senha</Label>
               <InputPassword

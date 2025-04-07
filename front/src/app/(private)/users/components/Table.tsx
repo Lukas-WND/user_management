@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { useQuery } from "@tanstack/react-query";
 
@@ -45,7 +45,7 @@ export default function UsersTable() {
   const filters = useUserFilterStore((state) => state.filters);
 
   return (
-    <>
+    <div className="w-full h-full mt-10">
       {isLoading ? (
         <TableSkeleton />
       ) : (
@@ -57,6 +57,6 @@ export default function UsersTable() {
           paginate={10}
         />
       )}
-    </>
+    </div>
   );
 }

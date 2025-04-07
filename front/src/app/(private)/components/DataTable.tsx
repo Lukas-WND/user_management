@@ -132,108 +132,121 @@ export default function DataTable<TData, TValue>({
 
     return (
       <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <Button
-              variant="ghost"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              <PaginationPrevious />
-            </Button>
-          </PaginationItem>
-          {prevIndexes.length > 0 && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <PaginationItem>
-                  <Button variant="ghost" className="p-1">
-                    <PaginationEllipsis />
-                  </Button>
-                </PaginationItem>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className={cn("min-w-5")}>
-                <ScrollArea>
-                  <div
-                    className={`max-h-52 ${prevIndexes.length > 5 && "mr-2"}`}
-                  >
-                    {prevIndexes.map((item) => (
-                      <DropdownMenuItem
-                        key={item}
-                        className="justify-center p-0"
-                      >
-                        <Button
-                          variant="ghost"
-                          onClick={() => table.setPageIndex(item - 1)}
-                          className="p-4"
-                        >
-                          {item}
-                        </Button>
-                      </DropdownMenuItem>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+        <div className="w-full flex justify-between items-center">
+          <p className="text-sm text-nowrap">
+            Exibindo <strong>{table.getRowModel().rows?.length}</strong> de{" "}
+            <strong>{data.length}</strong>{" "}
+            registros.
+          </p>
           <div>
-            {curIndexes.map((item) => (
-              <Button
-                key={item}
-                variant="ghost"
-                onClick={() => table.setPageIndex(item - 1)}
-                className={
-                  pageIndex === item - 1
-                    ? "border rounded-lg transform ease-linear"
-                    : ""
-                }
-              >
-                <PaginationItem>{item}</PaginationItem>
-              </Button>
-            ))}
-          </div>
-          {nextIndexes.length > 0 && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <PaginationItem>
-                  <Button variant="ghost" className="p-1">
-                    <PaginationEllipsis />
-                  </Button>
-                </PaginationItem>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className={cn("min-w-5")}>
-                <ScrollArea>
-                  <div
-                    className={`max-h-52 ${nextIndexes.length > 5 && "mr-2"}`}
-                  >
-                    {nextIndexes.map((item) => (
-                      <DropdownMenuItem
-                        key={item}
-                        className="justify-center p-0"
+            <PaginationContent>
+              <PaginationItem>
+                <Button
+                  variant="ghost"
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  <PaginationPrevious />
+                </Button>
+              </PaginationItem>
+              {prevIndexes.length > 0 && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <PaginationItem>
+                      <Button variant="ghost" className="p-1">
+                        <PaginationEllipsis />
+                      </Button>
+                    </PaginationItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className={cn("min-w-5")}>
+                    <ScrollArea>
+                      <div
+                        className={`max-h-52 ${
+                          prevIndexes.length > 5 && "mr-2"
+                        }`}
                       >
-                        <Button
-                          variant="ghost"
-                          onClick={() => table.setPageIndex(item - 1)}
-                          className="p-4 rounded-lg"
-                        >
-                          {item}
-                        </Button>
-                      </DropdownMenuItem>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-          <PaginationItem>
-            <Button
-              variant="ghost"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              <PaginationNext />
-            </Button>
-          </PaginationItem>
-        </PaginationContent>
+                        {prevIndexes.map((item) => (
+                          <DropdownMenuItem
+                            key={item}
+                            className="justify-center p-0"
+                          >
+                            <Button
+                              variant="ghost"
+                              onClick={() => table.setPageIndex(item - 1)}
+                              className="p-4"
+                            >
+                              {item}
+                            </Button>
+                          </DropdownMenuItem>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+              <div>
+                {curIndexes.map((item) => (
+                  <Button
+                    key={item}
+                    variant="ghost"
+                    onClick={() => table.setPageIndex(item - 1)}
+                    className={
+                      pageIndex === item - 1
+                        ? "border rounded-lg transform ease-linear"
+                        : ""
+                    }
+                  >
+                    <PaginationItem>{item}</PaginationItem>
+                  </Button>
+                ))}
+              </div>
+              {nextIndexes.length > 0 && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <PaginationItem>
+                      <Button variant="ghost" className="p-1">
+                        <PaginationEllipsis />
+                      </Button>
+                    </PaginationItem>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className={cn("min-w-5")}>
+                    <ScrollArea>
+                      <div
+                        className={`max-h-52 ${
+                          nextIndexes.length > 5 && "mr-2"
+                        }`}
+                      >
+                        {nextIndexes.map((item) => (
+                          <DropdownMenuItem
+                            key={item}
+                            className="justify-center p-0"
+                          >
+                            <Button
+                              variant="ghost"
+                              onClick={() => table.setPageIndex(item - 1)}
+                              className="p-4 rounded-lg"
+                            >
+                              {item}
+                            </Button>
+                          </DropdownMenuItem>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+              <PaginationItem>
+                <Button
+                  variant="ghost"
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  <PaginationNext />
+                </Button>
+              </PaginationItem>
+            </PaginationContent>
+          </div>
+        </div>
       </Pagination>
     );
   };

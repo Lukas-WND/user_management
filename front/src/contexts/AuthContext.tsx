@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.push("/home");
     },
     onError: ({message}) => {
-      toast.error("Usuário/Senha inváido(a)");
+      toast.error("Usuário/Senha inválido(a)");
       setUser(null);
       setIsAuthenticated(true);
     },

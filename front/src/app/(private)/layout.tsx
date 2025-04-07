@@ -9,7 +9,7 @@ export default function PrivateRoutesLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-full h-full">
+      <main className="w-full h-screen bg-secondary">
         <div className="w-full flex h-20 bg-white justify-between items-center pr-8">
           <SidebarTrigger
             className="w-9 h-9 -ml-4 z-10 rounded-full hover:bg-sidebar-ring bg-secondary"

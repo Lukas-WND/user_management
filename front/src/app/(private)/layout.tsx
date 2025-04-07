@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import React from "react";
 import { AppSidebar } from "./components/app-sidebar";
+import { NavUser } from "./components/nav-user";
 
 export default function PrivateRoutesLayout({
   children,
@@ -14,6 +15,7 @@ export default function PrivateRoutesLayout({
             className="w-9 h-9 -ml-4 z-10 rounded-full hover:bg-sidebar-ring bg-secondary"
             variant={"secondary"}
           />
+          <NavUser />
         </div>
         {children}
       </main>

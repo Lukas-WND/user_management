@@ -37,7 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await api.post("/auth/login", { register, password });
       return response.data; // {usuário enviado como resposta ao login }
     },
-    onSuccess: ({ user }) => {
+    onSuccess: ({ user }: { user: User }) => {
+      console.log(user);
       setUser(user); // pega os dados do usuário autenticado
       router.push("/home");
     },

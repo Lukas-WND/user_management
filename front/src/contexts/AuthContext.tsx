@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { createContext, useContext, useState } from "react";
 
-type User = {
+export type User = {
   id: string;
   name: string;
   email: string;

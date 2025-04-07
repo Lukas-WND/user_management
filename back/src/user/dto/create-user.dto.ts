@@ -1,8 +1,9 @@
+import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 
 export const CreateUserSchema = z.object({
   name: z.string().min(1, { message: 'O nome é obrigatório.' }),
-  email: z.string().email({message: 'Informe um e-mail válido'}).min(1, { message: 'O e-mail é obrigatório.' }),
+  email: z.string().email({ message: 'Informe um e-mail válido' }).min(1, { message: 'O e-mail é obrigatório.' }),
   employee_id: z
     .string()
     .regex(/^\d+$/, { message: 'A matrícula deve conter apenas números' })
@@ -11,3 +12,5 @@ export const CreateUserSchema = z.object({
 });
 
 export type CreateUserDto = z.infer<typeof CreateUserSchema>;
+
+export class CreateUserSwaggerDto extends createZodDto(CreateUserSchema) { }

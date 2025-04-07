@@ -19,9 +19,13 @@ export async function createUser(user: Partial<User>) {
   return data;
 }
 
-export async function updateUser({id, user}: {id: string, user:any}) {
+export async function updateUser({ id, user }: { id: string; user: any }) {
   console.log(user);
-  const { data } = await api.patch(`user/${id}`, user);
+  const { data } = await api.patch(`user/${id}`, user, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   return data;
 }

@@ -35,6 +35,7 @@ export class ZodValidationPipe implements PipeTransform {
 
   transform(value: unknown, metadata: ArgumentMetadata) {
     try {
+      console.log(metadata)
       return this.schema.parse(value);
     } catch (error) {
       const zodError = error as ZodError;

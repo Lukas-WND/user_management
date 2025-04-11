@@ -1,7 +1,7 @@
 # Ignora dependências locais (o container instala as próprias)
 node_modules
 .next
-dist
+Dockerfile
 
 # Logs e temporários
 npm-debug.log
@@ -10,9 +10,17 @@ npm-debug.log
 *.tmp
 *.DS_Store
 
+# Gerenciador de versão
+.git
+.gitignore
+
 # Configs e pastas de IDE/editor
 .vscode
 .idea
 
 # Arquivos de ambiente
 .env.*
+
+# Arquivos desnecessários no container
+README.md
+.eslint.config.mjs

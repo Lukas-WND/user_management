@@ -4,18 +4,20 @@ services:
     build: ./front
     ports:
       - 80:5173
+    environment:
+      - NODE_ENV=development
     depends_on:
       - backend
       - database
     volumes:
-      - ./front:/app
-      - /app/node_modules
+      - ./front/public:/app/public
+      - ./front/src:/app/src
 
   backend:
     container_name: backend
     build: ./back
     ports:
-      - "3000:3000"
+      - 3000:3000
     environment:
       - PORT=3000
       - NODE_ENV=development

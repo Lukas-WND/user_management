@@ -1,0 +1,18 @@
+# Ignora dependências locais (o container instala as próprias)
+node_modules
+.next
+dist
+
+# Logs e temporários
+npm-debug.log
+*.log
+*.swp
+*.tmp
+*.DS_Store
+
+# Configs e pastas de IDE/editor
+.vscode
+.idea
+
+# Arquivos de ambiente
+.env.*

@@ -1,0 +1,27 @@
+# Dependências e builds locais
+node_modules
+dist
+coverage
+test
+Dockerfile
+
+# Logs e temporários
+*.log
+*.swp
+*.tmp
+
+# Gerenciador de versão
+.git
+.gitignore
+
+# Configurações de IDE/editor
+.vscode
+.idea
+
+# Arquivos de ambiente
+.env.*
+
+# Arquivos desnecessários no container
+README.md
+.prettierrc
+.eslint.config.mjs

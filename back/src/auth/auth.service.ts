@@ -1,9 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
-import { compare } from 'bcrypt';
-
+import { comparePasswordWithHash } from 'src/utils/crypto/transform';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 @Injectable()
 export class AuthService {
   constructor(
@@ -13,7 +11,9 @@ export class AuthService {
 
   async validateUser(register: string, pass: string) {
     const user = await this.userService.findOneByEmailOrEmployeeID(register);
-    const confirm = user ? await compare(pass, user.password) : false;
+    const confirm = user
+      ? await comparePasswordWithHash(pass, user.password)
+      : false;
 
     if (user && confirm) {
       const { password, ...result } = user;

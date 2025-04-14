@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
-import { Public } from './public-decorator';
+import { SkipAuth } from './public-decorator';
 import { Response } from 'express';
 import { Request as ReqExpress } from 'express';
 import { User } from 'src/user/entities/user.entity';
@@ -18,7 +18,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
+  @SkipAuth()
   @UseGuards(LocalAuthGuard)
   @Post('login')
   @ApiOperation({ summary: 'Log in', description: 'Authenticates user' })
@@ -36,7 +36,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  @Public()
+  @SkipAuth()
   @ApiOperation({ summary: 'Log out', description: 'Logs current user out' })
   async logout(@Res({ passthrough: true }) res: Response) {
     res.clearCookie('Authorization');

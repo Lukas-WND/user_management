@@ -8,101 +8,112 @@ Sistema completo de gerenciamento de usuários, com autenticação via cookies, 
 
 ### Back-end (NestJS)
 
-- NestJS
-- TypeORM
-- PostgreSQL
-- Zod (validação)
-- Swagger (documentação)
-- Bcrypt (hash de senhas)
-- Cookie Parser
+- NestJS  
+- TypeORM  
+- MySQL  
+- Zod (validação)  
+- Swagger (documentação)  
+- Bcrypt (hash de senhas)  
+- Cookie Parser  
 
 ### Front-end (React - Next.js)
 
-- React
-- Next.js App Router
-- React Query
-- Axios
-- Tailwind CSS
-- Zod + React Hook Form
-- Sonner (toasts)
-- Context API
+- React  
+- Next.js App Router  
+- React Query  
+- Axios  
+- Tailwind CSS  
+- Zod + React Hook Form  
+- Sonner (toasts)  
+- Context API  
 
---- 
+---
 
 ## 🚀 Como rodar o projeto localmente
 
-### 🏗️ Docker
-1. Execute o comando para montar e subir o container do banco de dados no docker:
+### 📥 Clonando o projeto
+
+1. Clone o repositório:
 ```bash
-docker-compose up -d --build
+git clone https://github.com/Lukas-WND/user_management.git
 ```
+
+2. Acesse o diretório do projeto:
+```bash
+cd user_management
+```
+
+---
 
 ### 🖥️ Backend (NestJS)
 
-1. Acesse a pasta `back/`:
+3. Acesse a pasta do back-end:
 ```bash
 cd back
 ```
 
-2. Instale as dependências:
-```bash
-npm install
+4. Crie o arquivo `.env` com as variáveis de ambiente:
 ```
-
-3. Crie o arquivo .env na raiz do projeto:
-```
-DB_HOST=localhost
-DB_PORT=33065
-DB_USERNAME=root
-DB_PASSWORD=root
+DB_HOST=database
+DB_PORT=3306
+DB_USER=root
+DB_PASS=root
 DB_NAME=database
 
 SECRET_KEY=MY_SECRET_KEY
-FRONTEND_URL=http://localhost:3001
+FRONTEND_URL=http://localhost
 ```
 
-4. Inicie o servidor de desenvolvimento:
+5. Volte para a raiz do projeto:
 ```bash
-npm run start:dev
+cd ..
 ```
 
-5. A documentação está disponível em: http://localhost:3000/docs
+---
 
 ### 🖥️ Frontend (Next.js)
 
-1. Acesse a pasta `front/`:
+6. Acesse a pasta do front-end:
 ```bash
 cd front
 ```
 
-2. Instale as dependências:
-```bash
-npm install
-```
-
-3. Crie o arquivo .env na raiz do projeto:
+7. Crie o arquivo `.env` com as variáveis de ambiente:
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3000
 NEXT_WEBPACK_USEPOLLING=1
 ```
 
-4. Inicie o servidor de desenvolvimento:
+8. Volte para a raiz do projeto:
 ```bash
-npm run dev
+cd ..
 ```
 
-5. Acesse no navegador o endereço: http://localhost:3001
+---
 
-### 🔐 Funcionalidades principais
+### 🐳 Docker
+
+9. Construa e inicie os containers com o Docker Compose:
+```bash
+docker-compose up -d --build
+```
+
+---
+
+## 🔐 Funcionalidades principais
+
 1. Cadastro de usuários  
 2. Login com cookies HTTP-only  
 3. Logout e proteção de rotas  
 4. Atualização de perfil com troca de senha segura  
 5. Validações front-end e back-end com Zod  
 6. Toasts de feedback com Sonner  
-7. Documentação Swagger no back-end  
-8. Autenticação persistente via cookies (SSR-ready)
+7. Documentação Swagger no back-end (`/docs`)  
+8. Autenticação persistente via cookies (SSR-ready)  
 
-### 📌 Requisitos
+---
+
+## 📌 Requisitos
+
 - Node.js >= 18  
-- Docker (para baixar a imagem do banco de dados)
+- Docker e Docker Compose
